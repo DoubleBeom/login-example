@@ -1,3 +1,4 @@
+import {User} from "../mock/user";
 import {useState} from "react";
 import { Button, Form } from 'semantic-ui-react'
 import axios from "axios";
@@ -5,6 +6,7 @@ import axios from "axios";
 export function LoginUser(){
     const [ error, setError ] = useState(false)
     const [ inputs, setInputs ] = useState({
+        name: '',
         email: '',
         password: '',
     });
@@ -43,24 +45,28 @@ export function LoginUser(){
 
     return (
         <>
-            <h2>Login</h2>
-            <Form action="" onSubmit={onSubmit} error={error}>
-                {Object.keys(inputs).map((key) =>
-                    (
-                        <Form.Input
-                            key={key}
-                            type={key}
-                            name={key}
-                            value={inputs[key]}
-                            onChange={onChange}
-                            placeholder={`please enter your ${key}`}
-                            error={!error?  null : { content: `Please enter your ${key}`, pointing: 'below' }}
-                            label={key}
-                        />
-                    )
-                )}
-                <Button type="submit">제출</Button>
-            </Form>
+            <Grid.Column width={3}>
+                <Segment>
+                    <h2>Login</h2>
+                    <Form action="" onSubmit={onSubmit} error={error}>
+                        {Object.keys(inputs).map((key) =>
+                            (
+                                <Form.Input
+                                    key={key}
+                                    type={key}
+                                    name={key}
+                                    value={inputs[key]}
+                                    onChange={onChange}
+                                    placeholder={`please enter your ${key}`}
+                                    error={!error?  null : { content: `Please enter your ${key}`, pointing: 'below' }}
+                                    label={key}
+                                />
+                            )
+                        )}
+                        <Button type="submit">제출</Button>
+                    </Form>
+                </Segment>
+            </Grid.Column>
         </>
     )
 }
