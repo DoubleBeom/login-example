@@ -1,6 +1,5 @@
-import {User} from "../mock/user";
 import {useState} from "react";
-import { Button, Form } from 'semantic-ui-react'
+import {Grid, Header, Segment, Form, Button } from 'semantic-ui-react'
 import axios from "axios";
 
 export function LoginUser(){
@@ -45,9 +44,11 @@ export function LoginUser(){
 
     return (
         <>
-            <Grid.Column width={3}>
+            <Grid.Column width={12}>
+                <Header as='h2' attached='top'>
+                    Login
+                </Header>
                 <Segment>
-                    <h2>Login</h2>
                     <Form action="" onSubmit={onSubmit} error={error}>
                         {Object.keys(inputs).map((key) =>
                             (
