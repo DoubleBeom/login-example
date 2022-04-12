@@ -2,13 +2,14 @@ import {useState} from "react";
 import { Button, Form } from 'semantic-ui-react'
 import axios from "axios";
 
-export function LoginUser(){
+export function Register(){
     const [ error, setError ] = useState(false)
     const [ inputs, setInputs ] = useState({
+        name: '',
         email: '',
         password: '',
     });
-    const { email, password } = inputs;
+    const { name, email, password } = inputs;
 
     const onChange = (e) =>{
         const { value, name } = e.target; // e.target 에서 name 과 value 를 추출
@@ -23,19 +24,19 @@ export function LoginUser(){
         e.preventDefault();
 
         // api 호출
-        axios.post('http://localhost:3100/api/login', null, {
+        axios.post('http://localhost:3100/api/register', null, {
             params: {
+                'name': inputs[name],
                 'email': inputs[email],
                 'password': inputs[password]
-                }
-            })
+            }
+        })
             .then(res => {
-                if(!res.data.loginSuccess){
-                    setError(true)
-                    return console.log(res.data.loginSuccess)
+                if(!res.data.success){
+                    return console.log('안됌',res.data.success)
                 }
-                if(res.data.loginSuccess){
-                    return console.log('pass')
+                if(res.data.success){
+                    return console.log('됨',res.data.success)
                 }
             })
             .catch(err => console.log(err))
@@ -43,7 +44,7 @@ export function LoginUser(){
 
     return (
         <>
-            <h2>Login</h2>
+            <h2>Register</h2>
             <Form action="" onSubmit={onSubmit} error={error}>
                 {Object.keys(inputs).map((key) =>
                     (
