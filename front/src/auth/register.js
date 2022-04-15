@@ -3,6 +3,7 @@ import {Grid, Header, Segment, Form, Button } from 'semantic-ui-react'
 import axios from "axios";
 
 export function Register(){
+    // TODO 회원가입후 알림창 || 페이지 띄우기
     const [ error, setError ] = useState(false)
     const [ inputs, setInputs ] = useState({
         name: '',
@@ -24,12 +25,11 @@ export function Register(){
         e.preventDefault();
 
         // api 호출
-        axios.post('http://localhost:3100/api/register', null, {
-            params: {
-                'name': inputs[name],
-                'email': inputs[email],
-                'password': inputs[password]
-            }
+        axios.post('http://localhost:3100/api/register', {
+            'name': name,
+            'email': email,
+            'password': password
+
         })
             .then(res => {
                 if(!res.data.success){
