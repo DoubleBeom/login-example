@@ -8,7 +8,7 @@ export function App() {
         <>
             <Grid style={{height: '100vh'}} verticalAlign='middle' centered columns={2}>
                 <LoginUser/>
-                <Register/>
+                {/*<Register/>*/}
             </Grid>
         </>
     );
