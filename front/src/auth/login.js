@@ -5,7 +5,6 @@ import axios from "axios";
 export function LoginUser(){
     const [ error, setError ] = useState(false)
     const [ inputs, setInputs ] = useState({
-        name: '',
         email: '',
         password: '',
     });
@@ -22,18 +21,17 @@ export function LoginUser(){
 
     const onSubmit = (e) => {
         e.preventDefault();
+        console.log(email, password)
 
         // api 호출
-        axios.post('http://localhost:3100/api/login', null, {
-            params: {
-                'email': inputs[email],
-                'password': inputs[password]
-                }
+        axios.post('http://localhost:3100/api/login', {
+                "email": email,
+                "password": password
             })
             .then(res => {
                 if(!res.data.loginSuccess){
-                    setError(true)
-                    return console.log(res.data.loginSuccess)
+                    return setError(true)
+                    // return console.log(res.data.loginSuccess)
                 }
                 if(res.data.loginSuccess){
                     return console.log('pass')
