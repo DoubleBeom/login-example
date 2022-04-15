@@ -1,8 +1,8 @@
 import {useState} from "react";
-import {Grid, Header, Segment, Form, Button } from 'semantic-ui-react'
+import {Grid, Header, Segment, Form, Button, Divider} from 'semantic-ui-react'
 import axios from "axios";
 
-export function LoginUser(){
+export function LoginUser(props){
     const [ error, setError ] = useState(false)
     const [ inputs, setInputs ] = useState({
         email: '',
@@ -16,7 +16,6 @@ export function LoginUser(){
             ...inputs, // 기존의 input 객체를 복사
             [name]: value // name 키를 가진 값을 value 로 설정
         });
-        console.log(e.target.value);
     }
 
     const onSubmit = (e) => {
@@ -30,11 +29,15 @@ export function LoginUser(){
             })
             .then(res => {
                 if(!res.data.loginSuccess){
-                    return setError(true)
-                    // return console.log(res.data.loginSuccess)
+                    return setError(true);
                 }
                 if(res.data.loginSuccess){
-                    return console.log('pass')
+                    // 후에 필요 없는 기능 ( 동작확인용 )
+                    setError(false);
+
+                    // 전달 받은 props값을 변경하여 상위컴포넌트로 전달
+                    return props.onClick(true);
+
                 }
             })
             .catch(err => console.log(err))
@@ -42,7 +45,8 @@ export function LoginUser(){
 
     return (
         <>
-            <Grid.Column width={12}>
+            <Grid.Column width={4}>
+
                 <Header as='h2' attached='top'>
                     Login
                 </Header>
@@ -62,10 +66,19 @@ export function LoginUser(){
                                 />
                             )
                         )}
-                        <Button type="submit">제출</Button>
+
+                        <Divider/>
+                        <Button fluid={true} color="teal" type="submit">로그인</Button>
+                        <Divider/>
+                        <Button fluid={true} color="violet" as="a">회원가입</Button>
                     </Form>
                 </Segment>
             </Grid.Column>
+            {/*{isLogin?. return(*/}
+            {/*    <>*/}
+            {/*    </>*/}
+            {/*    )*/}
+            {/*}*/}
         </>
     )
 }
