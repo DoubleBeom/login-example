@@ -1,6 +1,7 @@
 import {useState} from "react";
 import {Grid, Header, Segment, Form, Button, Divider} from 'semantic-ui-react'
 import axios from "axios";
+import {Link} from "react-router-dom";
 
 export function LoginUser(props){
     const [ error, setError ] = useState(false)
@@ -11,10 +12,10 @@ export function LoginUser(props){
     const { email, password } = inputs;
 
     const onChange = (e) =>{
-        const { value, name } = e.target; // e.target 에서 name 과 value 를 추출
+        const { value, name } = e.target; // Input 에서 name 과 value 를 추출
         setInputs({
-            ...inputs, // 기존의 input 객체를 복사
-            [name]: value // name 키를 가진 값을 value 로 설정
+            ...inputs,
+            [name]: value
         });
     }
 
@@ -22,11 +23,7 @@ export function LoginUser(props){
         e.preventDefault();
         console.log(email, password)
 
-        // api 호출
-        axios.post('http://localhost:3100/api/login', {
-                "email": email,
-                "password": password
-            })
+        axios.post('http://localhost:3100/api/login', inputs)
             .then(res => {
                 if(!res.data.loginSuccess){
                     return setError(true);
@@ -37,7 +34,6 @@ export function LoginUser(props){
 
                     // 전달 받은 props값을 변경하여 상위컴포넌트로 전달
                     return props.onClick(true);
-
                 }
             })
             .catch(err => console.log(err))
@@ -52,25 +48,27 @@ export function LoginUser(props){
                 </Header>
                 <Segment>
                     <Form action="" onSubmit={onSubmit} error={error}>
-                        {Object.keys(inputs).map((key) =>
+                        {Object.keys(inputs).map((v) =>
                             (
                                 <Form.Input
-                                    key={key}
-                                    type={key}
-                                    name={key}
-                                    value={inputs[key]}
+                                    key={v}
+                                    type={v}
+                                    name={v}
+                                    value={inputs[v]}
                                     onChange={onChange}
-                                    placeholder={`please enter your ${key}`}
-                                    error={!error?  null : { content: `Please enter your ${key}`, pointing: 'below' }}
-                                    label={key}
+                                    placeholder={`please enter your ${v}`}
+                                    error={!error?  null : { content: `Please enter your ${v}`, pointing: 'below' }}
+                                    label={v}
                                 />
                             )
                         )}
 
                         <Divider/>
-                        <Button fluid={true} color="teal" type="submit">로그인</Button>
+                        <Button fluid color="teal" type="submit">로그인</Button>
                         <Divider/>
-                        <Button fluid={true} color="violet" as="a">회원가입</Button>
+                        <Link to="/register">
+                            <Button fluid color="violet" type="button">회원가입</Button>
+                        </Link>
                     </Form>
                 </Segment>
             </Grid.Column>

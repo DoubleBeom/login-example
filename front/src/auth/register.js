@@ -13,24 +13,17 @@ export function Register(){
     const { name, email, password } = inputs;
 
     const onChange = (e) =>{
-        const { value, name } = e.target; // e.target 에서 name 과 value 를 추출
+        const { value, name } = e.target; // Input 에서 name 과 value 를 추출
         setInputs({
-            ...inputs, // 기존의 input 객체를 복사
-            [name]: value // name 키를 가진 값을 value 로 설정
+            ...inputs,
+            [name]: value
         });
-        console.log(e.target.value);
     }
 
     const onSubmit = (e) => {
         e.preventDefault();
 
-        // api 호출
-        axios.post('http://localhost:3100/api/register', {
-            'name': name,
-            'email': email,
-            'password': password
-
-        })
+        axios.post('http://localhost:3100/api/register', inputs)
             .then(res => {
                 if(!res.data.success){
                     return console.log('안됌',res.data.success)
@@ -44,27 +37,27 @@ export function Register(){
 
     return (
         <>
-            <Grid.Column width={12}>
+            <Grid.Column width={4}>
                 <Header as='h2' attached='top'>
                     Register
                 </Header>
                 <Segment>
                     <Form action="" onSubmit={onSubmit} error={error}>
-                        {Object.keys(inputs).map((key) =>
+                        {Object.keys(inputs).map((v) =>
                             (
                                 <Form.Input
-                                    key={key}
-                                    type={key}
-                                    name={key}
-                                    value={inputs[key]}
+                                    key={v}
+                                    type={v}
+                                    name={v}
+                                    value={inputs[v]}
                                     onChange={onChange}
-                                    placeholder={`please enter your ${key}`}
-                                    error={!error?  null : { content: `Please enter your ${key}`, pointing: 'below' }}
-                                    label={key}
+                                    placeholder={`please enter your ${v}`}
+                                    error={!error?  null : { content: `Please enter your ${v}`, pointing: 'below' }}
+                                    label={v}
                                 />
                             )
                         )}
-                        <Button type="submit">제출</Button>
+                        <Button type="submit" fluid color="teal">제출</Button>
                     </Form>
                 </Segment>
             </Grid.Column>
