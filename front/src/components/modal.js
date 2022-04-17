@@ -6,7 +6,13 @@ export function ModalPopup(props) {
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
 
-    if(props.isLogin === false || props.error === true){
+    console.log('모달에 나오는 props==================', props)
+    console.log('모달에 나오는 props case==================', props)
+
+
+    // if(props.isLogin === false || props.error === true){
+    if( props.error === true){
+    // if(props.isLogin === false ){
         return (
             <Modal
                 onClose={() => setOpen(false)}
@@ -42,11 +48,11 @@ export function ModalPopup(props) {
                     >
                         <Header content='회원가입을 축하합니다!'/>
                         <Modal.Content>
-                            {Object.keys(props.data).map(v =>
+                            {/* {Object.keys(props.data).map(v =>
                                 <p key={v}>
                                     {v} : {props.data[v]}
                                 </p>
-                            )}
+                            )} */}
                         </Modal.Content>
                         <Modal.Actions>
                             <Button

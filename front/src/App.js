@@ -9,6 +9,9 @@ import {ErrorPage} from "./pages/errorpage";
 
 export function App() {
     const [ isLogin, setIsLogin ] = useState(false);
+
+
+    console.log('app에 있는 isLogin--------------', isLogin)
     // TODO #2 로그인 유지
     return (
         <BrowserRouter>
@@ -37,14 +40,15 @@ export function App() {
     );
 }
 
-function IndexPage(props){
+function IndexPage({isLogin}){
+    console.log('indexPage에 전달되는 -----------------', isLogin)
     return(
         <Grid.Column width={4}>
             <Header as='h2' attached='top'>
                 Welcome
             </Header>
             <Segment>
-                {props.isLogin ?
+                {isLogin ?
                     (<>
                         <Segment>
                             <p>안녕하세요</p>
