@@ -3,3 +3,10 @@ a:hover,
 a:focus {
   color: inherit
 }
+
+a::first-letter,
+button::first-letter,
+input::first-letter,
+label::first-letter{
+  text-transform: uppercase;
+}
