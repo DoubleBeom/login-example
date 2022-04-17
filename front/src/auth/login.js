@@ -2,6 +2,7 @@ import {useState} from "react";
 import {Grid, Header, Segment, Form, Button, Divider} from 'semantic-ui-react'
 import axios from "axios";
 import {Link} from "react-router-dom";
+import {ModalPopup} from "../components/modal";
 
 export function LoginUser(props){
     const [ error, setError ] = useState(false)
@@ -29,9 +30,6 @@ export function LoginUser(props){
                     return setError(true);
                 }
                 if(res.data.loginSuccess){
-                    // 후에 필요 없는 기능 ( 동작확인용 )
-                    setError(false);
-
                     // 전달 받은 props값을 변경하여 상위컴포넌트로 전달
                     return props.onClick(true);
                 }
@@ -64,19 +62,15 @@ export function LoginUser(props){
                         )}
 
                         <Divider/>
-                        <Button fluid color="teal" type="submit">로그인</Button>
+                        {/*<Button fluid color="teal" type="submit">로그인</Button>*/}
+                        <ModalPopup case={"login"} data={inputs} isLogin={props.isLogin} error={error}/>
                         <Divider/>
                         <Link to="/register">
-                            <Button fluid color="violet" type="button">회원가입</Button>
+                            <Button fluid color="violet" type="button">register</Button>
                         </Link>
                     </Form>
                 </Segment>
             </Grid.Column>
-            {/*{isLogin?. return(*/}
-            {/*    <>*/}
-            {/*    </>*/}
-            {/*    )*/}
-            {/*}*/}
         </>
     )
 }

@@ -1,9 +1,9 @@
 import {useState} from "react";
-import {Grid, Header, Segment, Form, Button } from 'semantic-ui-react'
+import {Grid, Header, Segment, Form, Divider} from 'semantic-ui-react'
 import axios from "axios";
+import {ModalPopup} from "../components/modal";
 
-export function Register(){
-    // TODO 회원가입후 알림창 || 페이지 띄우기
+export function Register(props){
     const [ error, setError ] = useState(false)
     const [ inputs, setInputs ] = useState({
         name: '',
@@ -26,10 +26,10 @@ export function Register(){
         axios.post('http://localhost:3100/api/register', inputs)
             .then(res => {
                 if(!res.data.success){
-                    return console.log('안됌',res.data.success)
+                    return setError(true);
                 }
                 if(res.data.success){
-                    return console.log('됨',res.data.success)
+                    return props.onClick(true);
                 }
             })
             .catch(err => console.log(err))
@@ -57,7 +57,9 @@ export function Register(){
                                 />
                             )
                         )}
-                        <Button type="submit" fluid color="teal">제출</Button>
+                        <Divider/>
+                        <ModalPopup case={"register"} data={inputs} isLogin={props.isLogin} error={error}/>
+                        {/*<Button type="submit" fluid color="teal">제출</Button>*/}
                     </Form>
                 </Segment>
             </Grid.Column>
