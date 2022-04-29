@@ -1,10 +1,17 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Grid, Header, Segment, Form, Button, Divider} from 'semantic-ui-react'
 import axios from "axios";
 import {Link} from "react-router-dom";
 import {ModalPopup} from "../components/modal";
 
 export function LoginUser(props){
+    const [ isLogin, setIsLogin ] = useState(props.isLogin);
+
+    useEffect(()=> {
+        setIsLogin(props.isLogin);
+    },[]);
+
+
     const [ error, setError ] = useState(false)
     const [ inputs, setInputs ] = useState({
         email: '',
@@ -63,7 +70,9 @@ export function LoginUser(props){
 
                         <Divider/>
                         {/*<Button fluid color="teal" type="submit">로그인</Button>*/}
-                        <ModalPopup case={"login"} data={inputs} isLogin={props.isLogin} error={error}/>
+                        {/*<ModalPopup case={"login"} data={inputs} isLogin={isLogin} error={error}/>*/}
+
+                        <Button type='submit' fluid>Login</Button>
                         <Divider/>
                         <Link to="/register">
                             <Button fluid color="violet" type="button">register</Button>
