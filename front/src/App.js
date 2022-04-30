@@ -31,7 +31,7 @@ export function App() {
                 />
                 <Route
                     path="/register"
-                    element={<Register onClick={v => setIsLogin(v)} isLogin={isLogin}/>}
+                    element={<Register setIsLogin={v => setIsLogin(v)} isLogin={isLogin}/>}
                 />
                 <Route
                     path="*"
@@ -49,7 +49,10 @@ function IndexPage(props){
         setIsLogin(props.isLogin);
     },[props.isLogin]);
 
-    const setLogOut = () => props.setIsLogin(false);
+    const setLogOut = () => {
+        setIsLogin(false);
+        props.setIsLogin(false);
+    }
 
     if(isLogin){
         return (
@@ -61,12 +64,7 @@ function IndexPage(props){
                     <Segment>
                         <p>안녕하세요</p>
                     </Segment>
-                    <Divider/>
                     <Button type="button" fluid color="red" onClick={setLogOut}>logout</Button>
-                    <Divider/>
-                    <Link to="/login">
-                        <Button fluid color="violet" type="button">login</Button>
-                    </Link>
                 </Segment>
             </Grid.Column>
         )

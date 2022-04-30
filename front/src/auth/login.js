@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {Grid, Header, Segment, Form, Button, Divider} from 'semantic-ui-react'
 import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
+import {ModalPopup} from "../components/modal";
 
 export function LoginUser(props){
     const navigate = useNavigate();
@@ -9,15 +10,13 @@ export function LoginUser(props){
 
     useEffect(()=> {
         setIsLogin(props.isLogin);
+        // 이미 로그인 했을경우 home으로 이동시킴
         if(isLogin) navigate('/');
     },[props.isLogin, isLogin, navigate]);
 
 
-    console.log('props :' ,props.isLogin);
-    console.log('isLogin : ', isLogin);
-
-
-    const [ error, setError ] = useState(false)
+    // inputs
+    const [ error, setError ] = useState(false);
     const [ inputs, setInputs ] = useState({
         email: '',
         password: '',
@@ -32,6 +31,13 @@ export function LoginUser(props){
         });
     }
 
+    // 로그인상태를 변환
+    const setChange = () => {
+        props.setIsLogin(true);
+        setIsLogin(true);
+    }
+
+    // submit
     const onSubmit = (e) => {
         e.preventDefault();
         console.log(email, password)
@@ -42,9 +48,7 @@ export function LoginUser(props){
                     return setError(true);
                 }
                 if(res.data.loginSuccess){
-                    // 전달 받은 props값을 변경하여 상위컴포넌트로 전달
-                    setIsLogin(true);
-                    props.setIsLogin(true);
+                    setChange();
                     return navigate('/');
                 }
             })
@@ -54,7 +58,6 @@ export function LoginUser(props){
     return (
         <>
             <Grid.Column width={4}>
-
                 <Header as='h2' attached='top'>
                     Login
                 </Header>
@@ -74,10 +77,8 @@ export function LoginUser(props){
                                 />
                             )
                         )}
-
                         <Divider/>
-
-                        <Button type='submit' fluid>Login</Button>
+                        <Button type='submit' color="teal" fluid>Login</Button>
                         <Divider/>
                         <Link to="/register">
                             <Button fluid color="violet" type="button">register</Button>
