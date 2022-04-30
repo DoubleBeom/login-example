@@ -9,7 +9,9 @@ export function LoginUser(props){
 
     useEffect(()=> {
         setIsLogin(props.isLogin);
-    },[props.isLogin]);
+        if(isLogin) navigate('/');
+    },[props.isLogin, isLogin, navigate]);
+
 
     console.log('props :' ,props.isLogin);
     console.log('isLogin : ', isLogin);
@@ -49,45 +51,42 @@ export function LoginUser(props){
             .catch(err => console.log(err))
     }
 
-    if(!isLogin){
-        return (
-            <>
-                <Grid.Column width={4}>
+    return (
+        <>
+            <Grid.Column width={4}>
 
-                    <Header as='h2' attached='top'>
-                        Login
-                    </Header>
-                    <Segment>
-                        <Form action="" onSubmit={onSubmit} error={error}>
-                            {Object.keys(inputs).map((v) =>
-                                (
-                                    <Form.Input
-                                        key={v}
-                                        type={v}
-                                        name={v}
-                                        value={inputs[v]}
-                                        onChange={onChange}
-                                        placeholder={`please enter your ${v}`}
-                                        error={!error?  null : { content: `Please enter your ${v}`, pointing: 'below' }}
-                                        label={v}
-                                    />
-                                )
-                            )}
+                <Header as='h2' attached='top'>
+                    Login
+                </Header>
+                <Segment>
+                    <Form action="" onSubmit={onSubmit} error={error}>
+                        {Object.keys(inputs).map((v) =>
+                            (
+                                <Form.Input
+                                    key={v}
+                                    type={v}
+                                    name={v}
+                                    value={inputs[v]}
+                                    onChange={onChange}
+                                    placeholder={`please enter your ${v}`}
+                                    error={!error?  null : { content: `Please enter your ${v}`, pointing: 'below' }}
+                                    label={v}
+                                />
+                            )
+                        )}
 
-                            <Divider/>
+                        <Divider/>
 
-                            <Button type='submit' fluid>Login</Button>
-                            <Divider/>
-                            <Link to="/register">
-                                <Button fluid color="violet" type="button">register</Button>
-                            </Link>
-                        </Form>
-                    </Segment>
-                </Grid.Column>
-            </>
-        )
-    }
-    if(isLogin) return navigate('/');
+                        <Button type='submit' fluid>Login</Button>
+                        <Divider/>
+                        <Link to="/register">
+                            <Button fluid color="violet" type="button">register</Button>
+                        </Link>
+                    </Form>
+                </Segment>
+            </Grid.Column>
+        </>
+    )
 }
 
 
