@@ -17,7 +17,7 @@ export function ModalPopup(props) {
                         onOpen={() => setOpen(true)}
                         open={open}
                         closeIcon={false}
-                        trigger={<Button fluid color="teal" onSubmit={props.onClick}>{props.case}</Button>}
+                        trigger={<Button fluid color="teal" onSubmit={props.onSubmit}>{props.case}</Button>}
                         dimmer="blurring"
                         size="mini"
                     >
@@ -63,7 +63,7 @@ const ErrorModal = (props) => {
             onOpen={() => setOpen(true)}
             open={open}
             closeIcon={false}
-            trigger={<Button fluid color="teal" onSubmit={props.onClick}>{props.case}</Button>}
+            trigger={<Button fluid color="teal" onSubmit={props.onSubmit}>{props.case}</Button>}
             dimmer="blurring"
             size="mini"
         >
