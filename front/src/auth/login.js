@@ -1,15 +1,18 @@
 import {useEffect, useState} from "react";
 import {Grid, Header, Segment, Form, Button, Divider} from 'semantic-ui-react'
 import axios from "axios";
-import {Link} from "react-router-dom";
-import {ModalPopup} from "../components/modal";
+import {Link, useNavigate} from "react-router-dom";
 
 export function LoginUser(props){
+    const navigate = useNavigate();
     const [ isLogin, setIsLogin ] = useState(props.isLogin);
 
     useEffect(()=> {
         setIsLogin(props.isLogin);
-    },[]);
+    },[props.isLogin]);
+
+    console.log('props :' ,props.isLogin);
+    console.log('isLogin : ', isLogin);
 
 
     const [ error, setError ] = useState(false)
@@ -38,50 +41,53 @@ export function LoginUser(props){
                 }
                 if(res.data.loginSuccess){
                     // 전달 받은 props값을 변경하여 상위컴포넌트로 전달
-                    return props.onClick(true);
+                    setIsLogin(true);
+                    props.setIsLogin(true);
+                    return navigate('/');
                 }
             })
             .catch(err => console.log(err))
     }
 
-    return (
-        <>
-            <Grid.Column width={4}>
+    if(!isLogin){
+        return (
+            <>
+                <Grid.Column width={4}>
 
-                <Header as='h2' attached='top'>
-                    Login
-                </Header>
-                <Segment>
-                    <Form action="" onSubmit={onSubmit} error={error}>
-                        {Object.keys(inputs).map((v) =>
-                            (
-                                <Form.Input
-                                    key={v}
-                                    type={v}
-                                    name={v}
-                                    value={inputs[v]}
-                                    onChange={onChange}
-                                    placeholder={`please enter your ${v}`}
-                                    error={!error?  null : { content: `Please enter your ${v}`, pointing: 'below' }}
-                                    label={v}
-                                />
-                            )
-                        )}
+                    <Header as='h2' attached='top'>
+                        Login
+                    </Header>
+                    <Segment>
+                        <Form action="" onSubmit={onSubmit} error={error}>
+                            {Object.keys(inputs).map((v) =>
+                                (
+                                    <Form.Input
+                                        key={v}
+                                        type={v}
+                                        name={v}
+                                        value={inputs[v]}
+                                        onChange={onChange}
+                                        placeholder={`please enter your ${v}`}
+                                        error={!error?  null : { content: `Please enter your ${v}`, pointing: 'below' }}
+                                        label={v}
+                                    />
+                                )
+                            )}
 
-                        <Divider/>
-                        {/*<Button fluid color="teal" type="submit">로그인</Button>*/}
-                        {/*<ModalPopup case={"login"} data={inputs} isLogin={isLogin} error={error}/>*/}
+                            <Divider/>
 
-                        <Button type='submit' fluid>Login</Button>
-                        <Divider/>
-                        <Link to="/register">
-                            <Button fluid color="violet" type="button">register</Button>
-                        </Link>
-                    </Form>
-                </Segment>
-            </Grid.Column>
-        </>
-    )
+                            <Button type='submit' fluid>Login</Button>
+                            <Divider/>
+                            <Link to="/register">
+                                <Button fluid color="violet" type="button">register</Button>
+                            </Link>
+                        </Form>
+                    </Segment>
+                </Grid.Column>
+            </>
+        )
+    }
+    if(isLogin) return navigate('/');
 }
 
 

@@ -9,6 +9,13 @@ import {ErrorPage} from "./pages/errorpage";
 
 export function App() {
     const [ isLogin, setIsLogin ] = useState(false);
+
+    useEffect(()=> {
+        setIsLogin(isLogin);
+    },[isLogin]);
+
+    console.log(isLogin);
+
     // TODO #2 로그인 유지
     return (
         <Grid style={{height: '100vh'}} verticalAlign='middle' centered>
@@ -16,11 +23,11 @@ export function App() {
                 <Route
                     path="/"
                     exact
-                    element={<IndexPage isLogin={isLogin}/>}
+                    element={<IndexPage setIsLogin={v => setIsLogin(v)} isLogin={isLogin}/>}
                 />
                 <Route
                     path="/login"
-                    element={<LoginUser onClick={v => setIsLogin(v)} isLogin={isLogin}/>}
+                    element={<LoginUser setIsLogin={v => setIsLogin(v)} isLogin={isLogin}/>}
                 />
                 <Route
                     path="/register"
@@ -40,26 +47,31 @@ function IndexPage(props){
 
     useEffect(()=> {
         setIsLogin(props.isLogin);
-    },[]);
+    },[props.isLogin]);
+
+    const setLogOut = () => props.setIsLogin(false);
 
     if(isLogin){
         return (
-            <>
-                <Grid.Column width={4}>
-                    <Header as='h2' attached='top'>
-                        Welcome
-                    </Header>
+            <Grid.Column width={4}>
+                <Header as='h2' attached='top'>
+                    Welcome
+                </Header>
+                <Segment>
                     <Segment>
-                        <Segment>
-                            <p>안녕하세요</p>
-                        </Segment>
-                        <Divider/>
-                        <Button type="button" fluid color="red">logout</Button>
+                        <p>안녕하세요</p>
                     </Segment>
-                </Grid.Column>
-            </>
+                    <Divider/>
+                    <Button type="button" fluid color="red" onClick={setLogOut}>logout</Button>
+                    <Divider/>
+                    <Link to="/login">
+                        <Button fluid color="violet" type="button">login</Button>
+                    </Link>
+                </Segment>
+            </Grid.Column>
         )
-    }else{
+    }
+    if(!isLogin){
         return(
             <Grid.Column width={4}>
                 <Header as='h2' attached='top'>
