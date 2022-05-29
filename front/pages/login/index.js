@@ -1,0 +1,36 @@
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+
+const Login = () => {
+  // 페이지 이동으로
+  // react-router-dom 대신에 사용합니다.
+  const router = useRouter();
+
+  // TODO: 값을 분리 및 상태 변화
+  const [email, setEmail] = useState('');
+  const onChangeEmail = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const [password, setPassword] = useState('');
+  const onChangePassword = (e) => {
+    setPassword(e.target.value);
+  };
+
+  return (
+    <div>
+      <h2>로그인 페이지</h2>
+      <div>
+        <label>이메일</label>
+        <input type='email' value={email} onChange={onChangeEmail} />
+      </div>
+
+      <div>
+        <label>비밀번호</label>
+        <input type='password' value={password} onChange={onChangePassword} />
+      </div>
+    </div>
+  );
+};
+
+export default Login;
