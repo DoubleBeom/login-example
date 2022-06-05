@@ -1,6 +1,8 @@
 import Nav from '../components/nav';
 import '../styles/globals.css';
 
+import wrapper from '../store/configureStore';
+
 function MyApp({ Component, pageProps }) {
   return (
     <>
@@ -10,4 +12,4 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-export default MyApp;
+export default wrapper.withRedux(MyApp);
