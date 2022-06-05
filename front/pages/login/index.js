@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
+import { useLogin } from '../../hooks/login';
+
 const Login = () => {
   // 페이지 이동으로
   // react-router-dom 대신에 사용합니다.
@@ -17,9 +19,24 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
+  const { mutate: login, data, error, isError, isSuccess } = useLogin();
+
   const onSubmitForm = useCallback(() => {
     console.log(email, password);
+    const loginData = { email, password };
+    login(loginData);
   }, [email, password]);
+
+  if (isError) {
+    return <h2>{error.message}</h2>;
+  }
+
+  if (isSuccess) {
+    alert('로그인 성공!');
+    router.push('/');
+  }
+
+  console.log('data=======', data);
 
   return (
     <div>
